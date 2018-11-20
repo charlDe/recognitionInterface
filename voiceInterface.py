@@ -99,12 +99,12 @@ with serial.Serial(port="/dev/rfcomm0", baudrate=9600   ,
              print "Esperando transcripcion iAtros /tmps/cops.out..."
              # Read - Parse - Transcribe
              while True:
-                 my_file = Path("/tmp/cops.out")
-                 if my_file.is_file():
+                 my_file = Path(file_name)
+                 if file_name.is_file():
                      # file exists:
                      break
              print "\nVERBOSE Readidng '/tmp/cops.out'..."
-             iatrosSCmd = read.main()
+             iatrosSCmd = read.main(file_name)
 
              #bash.run('rm /tmp/cops.out')
 

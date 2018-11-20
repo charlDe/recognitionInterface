@@ -7,11 +7,6 @@ import itertools
 import datetime
 import os
 
-#f_name = raw_input("Introduce el nombre del archivo: ")
-
-#Conf: file_name
-file_name = "/tmp/cops" + ".out"
-
 #EASING IO
 def logging(filename, line):
     with open(filename, 'r+') as f:
@@ -30,7 +25,7 @@ def escribir():
         file.write("Zowi, command number %d\r\n" % (i+1))
     file.close()
 
-def main():
+def main(file_name):
     #Date info for LOG
     date = datetime.datetime.now().strftime("%y-%m-%d %H:%M")
 
