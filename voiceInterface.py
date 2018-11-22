@@ -26,18 +26,10 @@ file_name = "/tmp/cops" + ".out"
 #Port Listening
 #python -m serial.tools.miniterm COM4
 
-#STOPSBITS_ONE = "STOPBITS_ONE"
-
 #Defining constants
 STOPSBITS_ONE = serial.STOPBITS_ONE
 EIGHTBITS = serial.EIGHTBITS
 PARITY_NONE = serial.PARITY_NONE
-
-#@return number bytes of encoded utf-8
-def utf8len(s):
-    return len(s.encode('utf-8'))
-
-#with serial.Serial('COM4', 19200, timeout = 1) as ser:
 
 with serial.Serial(port="/dev/rfcomm0", baudrate=9600   ,
         bytesize=EIGHTBITS,
@@ -66,19 +58,15 @@ with serial.Serial(port="/dev/rfcomm0", baudrate=9600   ,
 
      print ("Esta esperando: %s bytes" % ser.inWaiting())
 
-     while True:
+     try:
 
-         #os.remove('/home/carlos/TFG_Carlos/kk.wav')
-         #os.remove('/home/carlos/TFG_Carlos/kk.raw')
+         os.remove('/home/carlos/TFG_Carlos/kk.wav')
+         os.remove('/home/carlos/TFG_Carlos/kk.raw')
          #os.remove('/home/carlos/TFG_Carlos/kk.CC')
 
-         #print "\nVERBOSE IATROS-RUN..."
-         #process = Popen('/home/carlos/TFG_Carlos/iatros-run', stdin=PIPE, stdout=PIPE, stderr=None)
-
-         #os.spawnl(os.P_NOWAIT, '/home/carlos/TFG_Carlos/iatros-run')
          os.system("/home/carlos/TFG_Carlos/iatros-run &")
 
-         try:
+         while True:
 
              # Recorder
              print "\nVERBOSE Recorder sox -d -c 1 -r 16000 kk.wav"
@@ -93,22 +81,17 @@ with serial.Serial(port="/dev/rfcomm0", baudrate=9600   ,
              print "\nVERBOSE .raw -> CC"
              print "Status -", bash.run('/home/carlos/TFG_Carlos/raw2CC')
 
-                 #Popen.wait(process)
-             #pipe.run('/home/carlos/TFG_Carlos/iatros-run')
-
              print "Esperando transcripcion iAtros /tmps/cops.out..."
-             # Read - Parse - Transcribe
+
              while True:
                  my_file = Path(file_name)
-                 if file_name.is_file():
+                 if my_file.is_file():
                      # file exists:
                      break
+
              print "\nVERBOSE Readidng '/tmp/cops.out'..."
              iatrosSCmd = read.main(file_name)
 
-             #bash.run('rm /tmp/cops.out')
-
-             # NEED ERROR HANDLING FOR /TMP/COPS.OUT NOT EXISTS
              print "\nVERBOSE Processing text..."
              natSCmd = parse.main(iatrosSCmd)
 
@@ -123,10 +106,9 @@ with serial.Serial(port="/dev/rfcomm0", baudrate=9600   ,
              ser.write(input)
              #ser.flush()
              raw_input("Press Enter to continue...")
-         except Exception as e:
-             print "Error type -", e
-             raw_input("\nPress Enter to continue...")
+
+     except Exception as e:
+         print "Error type -", e
+         raw_input("\nPress Enter to continue...")
 
      print "Cerrar"
-
-     #ser.close()
