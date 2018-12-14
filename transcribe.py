@@ -87,8 +87,8 @@ ActmdDIC = {
 SCmdDICmod = {
 
     #direcciones
-    "derecha": 0,
-    "izquierda": 1,
+    "izquierda": 0,
+    "derecha": 1,
     "delante": 2,
     "adelante": 2,
     "atras": 3,
@@ -117,9 +117,9 @@ def main(commandL):
     mod = "" #partial
 
     SCmdDICvalues = list(itertools.chain.from_iterable(SCmdDIC.values()))
-    print "\nSCmdDICvalues: ", SCmdDICvalues
+    #print "\nSCmdDICvalues: ", SCmdDICvalues
     REmdDICvalues = list(itertools.chain.from_iterable(REmdDIC.values()))
-    print "REmdDICvalues: ", REmdDICvalues
+    #print "REmdDICvalues: ", REmdDICvalues
     #SCmdDICmodvalues = list(itertools.chain.from_iterable(SCmdDICmod.values()))
     #print "SEmdDICvalues: ", SCmdDICmodvalues
     SCmdDICmodvalues = SCmdDICmod.keys()
@@ -132,7 +132,7 @@ def main(commandL):
     modular = None
     for cmd in commandL:
 
-        print "\n" + cmd
+        #print "\n" + cmd
         # process : [anda] hacia [adelante=delante]
         # result  : M 2 30 1000?
 
@@ -146,28 +146,28 @@ def main(commandL):
 
         if cmd in SCmdDICvalues:
             # process S,M,H : M
-            print "\n" + cmd + " in SCmdDICvalues"
+            #print "\n" + cmd + " in SCmdDICvalues"
             transcript += SCmdDIC.keys()[SCmdDIC.values().index(returnListWichContains(cmd, SCmdDIC))]
             if cmd not in REmdDICvalues:
                 modular = False
-                print "Not in"
+                #print "Not in"
 
         if cmd in REmdDICvalues:
-            print "\n" + cmd + " in REmdDICvalues and modular"
+            #print "\n" + cmd + " in REmdDICvalues and modular"
             # process movimiento : M modular?
             mod = cmd
             modular = True
 
         if cmd in SCmdDICmodvalues and modular:
-            print "\n" + cmd + " in SEmdDICvalues"
+            #print "\n" + cmd + " in SEmdDICvalues"
             # process direccion:
-            print SCmdDICmod[cmd]
-            print ActmdDIC[mod]
+            #print SCmdDICmod[cmd]
+            #print ActmdDIC[mod]
             add = str(ActmdDIC[mod][SCmdDICmod[cmd]])
             transcript += " " + add
         elif modular == False:
             #process not modular ID
-            print "\n" + cmd + " not modular"
+            #print "\n" + cmd + " not modular"
             add = str(ActmdDIC[cmd][0])
             transcript += " " + add
 
